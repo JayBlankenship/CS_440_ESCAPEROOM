@@ -24,6 +24,10 @@ public:
 	void Construct(const FArguments& InArgs);
 
 	TWeakObjectPtr<class AMainMenuHUD> OwnerHUD;
+	
+	FReply OnPlayClicked() const;
+	FReply OnSettingsClicked() const;
+	FReply OnQuitClicked() const;
 
 	virtual bool SupportsKeyboardFocus() const override { return true; };
 };
