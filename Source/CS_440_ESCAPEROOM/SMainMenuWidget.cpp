@@ -103,19 +103,19 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 //TODO: Set play functionality here
 FReply SMainMenuWidget::OnPlayClicked() const
 {
-
+	return FReply::Handled();
 }
 
 //TODO: Set settings functionality here
 FReply SMainMenuWidget::OnSettingsClicked() const
 {
-
+	return FReply::Handled();
 }
 
 //TODO: Set quit functionality here
 FReply SMainMenuWidget::OnQuitClicked() const
 {
-
+	return FReply::Handled();
 }
 
 #undef LOCTEXT_NAMESPACE
