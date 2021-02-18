@@ -19,6 +19,12 @@ void AMainMenuHUD::showLogin()
 		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(LoginWidget.ToSharedRef()));
 		LoginWidget->SetVisibility(EVisibility::Visible);
 	}
+
+	if (PlayerOwner)
+	{
+		PlayerOwner->bShowMouseCursor = true;
+		PlayerOwner->SetInputMode(FInputModeUIOnly());
+	}
 }
 
 void AMainMenuHUD::removeLogin()
