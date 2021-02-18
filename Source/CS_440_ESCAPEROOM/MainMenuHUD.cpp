@@ -3,15 +3,37 @@
 
 #include "MainMenuHUD.h"
 #include "SMainMenuWidget.h"
+#include "SLoginWidget.h"
 #include "Engine.h"
 
 void AMainMenuHUD::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void AMainMenuHUD::showLogin()
+{
 	if (GEngine && GEngine->GameViewport) {
-		MainMenuWidget = SNew(SMainMenuWidget).OwnerHUD(this);
-		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(MainMenuWidget.ToSharedRef()));
-		MainMenuWidget->SetVisibility(EVisibility::Visible);
+		LoginWidget = SNew(LoginWidget).OwnerHUD(this);
+		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(LoginWidget.ToSharedRef()));
+		LoginWidget->SetVisibility(EVisibility::Visible);
 	}
 }
+
+void AMainMenuHUD::removeLogin()
+{
+
+}
+
+void AMainMenuHUD::showPlayMenu()
+{
+
+}
+
+void AMainMenuHUD::removePlayMenu()
+{
+
+}
+
+

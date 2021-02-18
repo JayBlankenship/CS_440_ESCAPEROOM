@@ -29,5 +29,4 @@ public:
 	FReply OnSettingsClicked() const;
 	FReply OnQuitClicked() const;
 
-	virtual bool SupportsKeyboardFocus() const override { return true; };
 };

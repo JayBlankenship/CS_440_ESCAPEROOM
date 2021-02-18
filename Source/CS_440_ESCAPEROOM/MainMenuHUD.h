@@ -17,7 +17,14 @@ class CS_440_ESCAPEROOM_API AMainMenuHUD : public AHUD
 protected:
 
 	TSharedPtr<class SMainMenuWidget> MainMenuWidget;
+	TSharedPtr<class SLoginWidget> LoginWidget;
 	TSharedPtr<class SWidget> MenuWidgetContainer;
 	
 	void BeginPlay();
+
+public:
+	void showLogin();
+	void removeLogin();
+	void showPlayMenu();
+	void removePlayMenu();
 };
