@@ -9,13 +9,13 @@
 void AMainMenuHUD::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	showLogin();
 }
 
 void AMainMenuHUD::showLogin()
 {
 	if (GEngine && GEngine->GameViewport) {
-		LoginWidget = SNew(LoginWidget).OwnerHUD(this);
+		LoginWidget = SNew(SLoginWidget).OwnerHUD(this);
 		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(LoginWidget.ToSharedRef()));
 		LoginWidget->SetVisibility(EVisibility::Visible);
 	}
