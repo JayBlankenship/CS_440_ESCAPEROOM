@@ -7,11 +7,65 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SLoginWidget::Construct(const FArguments& InArgs)
 {
-	/*
+
+	FSlateFontInfo font = FCoreStyle::Get().GetFontStyle("Arial");
+	font.Size = 30.f;
+	
 	ChildSlot
 	[
-		// Populate the widget
+		SNew(SOverlay)
+		+ SOverlay::Slot()
+		.VAlign(VAlign_Fill)
+		.HAlign(HAlign_Fill)
+		[
+			SNew(SImage)
+			.ColorAndOpacity(FColor::Green)
+		]
+		+ SOverlay::Slot()
+		.VAlign(VAlign_Center)
+		.HAlign(HAlign_Center)
+		.Padding(FMargin(300.f))
+		[
+			SNew(SVerticalBox)
+			+ SVerticalBox::Slot()
+			[
+				//input box for username
+				SNew(SEditableTextBox)
+				.HintText(FText::FromString("username"))
+				.Font(font)
+			]
+			+ SVerticalBox::Slot()
+			.Padding(FMargin(10.f))
+			[
+				SNew(SEditableTextBox)
+				.HintText(FText::FromString("password"))
+				.Font(font)
+			]
+			+ SVerticalBox::Slot()
+			.Padding(FMargin(5.f))
+			[
+				SNew(SButton)
+				.OnClicked(this, &SLoginWidget::OnLoginClick)
+				[
+					SNew(STextBlock)
+					.Text(FText::FromString("Login"))
+					.Font(font)
+				]
+				
+			]
+
+
+		]
 	];
-	*/
+	
+}
+
+FReply SLoginWidget::OnLoginClick() const
+{
+	if (OwnerHUD.IsValid())
+	{
+		OwnerHUD->removeLogin();
+	}
+	return FReply::Handled();
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

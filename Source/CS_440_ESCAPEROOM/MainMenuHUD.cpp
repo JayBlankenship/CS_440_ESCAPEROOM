@@ -29,15 +29,36 @@ void AMainMenuHUD::showLogin()
 
 void AMainMenuHUD::removeLogin()
 {
+	if (GEngine && GEngine->GameViewport && MenuWidgetContainer.IsValid())
+	{
+		GEngine->GameViewport->RemoveViewportWidgetContent(MenuWidgetContainer.ToSharedRef());
+		LoginWidget->SetVisibility(EVisibility::Hidden);
 
+		if (PlayerOwner) {
+			PlayerOwner->bShowMouseCursor = false;
+			PlayerOwner->SetInputMode(FInputModeGameOnly());
+		}
+	}
+
+	showMainMenu();
 }
 
-void AMainMenuHUD::showPlayMenu()
+void AMainMenuHUD::showMainMenu()
 {
+	if (GEngine && GEngine->GameViewport) {
+		MainMenuWidget = SNew(SMainMenuWidget).OwnerHUD(this);
+		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(MainMenuWidget.ToSharedRef()));
+		MainMenuWidget->SetVisibility(EVisibility::Visible);
+	}
 
+	if (PlayerOwner)
+	{
+		PlayerOwner->bShowMouseCursor = true;
+		PlayerOwner->SetInputMode(FInputModeUIOnly());
+	}
 }
 
-void AMainMenuHUD::removePlayMenu()
+void AMainMenuHUD::removeMainMenu()
 {
 
 }

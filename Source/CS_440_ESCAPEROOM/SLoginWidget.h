@@ -24,5 +24,5 @@ public:
 
 	TWeakObjectPtr<class AMainMenuHUD> OwnerHUD;
 
-	
+	FReply OnLoginClick() const;
 };

@@ -25,6 +25,6 @@ protected:
 public:
 	void showLogin();
 	void removeLogin();
-	void showPlayMenu();
-	void removePlayMenu();
+	void showMainMenu();
+	void removeMainMenu();
 };
