@@ -103,6 +103,10 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 //TODO: Set play functionality here
 FReply SMainMenuWidget::OnPlayClicked() const
 {
+	if (OwnerHUD.IsValid())
+	{
+		OwnerHUD->removeMainMenu();
+	}
 	return FReply::Handled();
 }
 

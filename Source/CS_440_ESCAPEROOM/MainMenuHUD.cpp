@@ -16,7 +16,7 @@ void AMainMenuHUD::showLogin()
 {
 	if (GEngine && GEngine->GameViewport) {
 		LoginWidget = SNew(SLoginWidget).OwnerHUD(this);
-		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(LoginWidget.ToSharedRef()));
+		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(WidgetContainer, SWeakWidget).PossiblyNullContent(LoginWidget.ToSharedRef()));
 		LoginWidget->SetVisibility(EVisibility::Visible);
 	}
 
@@ -29,38 +29,36 @@ void AMainMenuHUD::showLogin()
 
 void AMainMenuHUD::removeLogin()
 {
-	if (GEngine && GEngine->GameViewport && MenuWidgetContainer.IsValid())
-	{
-		GEngine->GameViewport->RemoveViewportWidgetContent(MenuWidgetContainer.ToSharedRef());
-		LoginWidget->SetVisibility(EVisibility::Hidden);
 
-		if (PlayerOwner) {
-			PlayerOwner->bShowMouseCursor = false;
-			PlayerOwner->SetInputMode(FInputModeGameOnly());
-		}
+
+	if (GEngine && GEngine->GameViewport && WidgetContainer.IsValid())
+	{
+		GEngine->GameViewport->RemoveViewportWidgetContent(WidgetContainer.ToSharedRef());
+
 	}
 
-	showMainMenu();
 }
 
 void AMainMenuHUD::showMainMenu()
 {
 	if (GEngine && GEngine->GameViewport) {
 		MainMenuWidget = SNew(SMainMenuWidget).OwnerHUD(this);
-		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(MainMenuWidget.ToSharedRef()));
+		GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(WidgetContainer, SWeakWidget).PossiblyNullContent(MainMenuWidget.ToSharedRef()));
 		MainMenuWidget->SetVisibility(EVisibility::Visible);
-	}
-
-	if (PlayerOwner)
-	{
-		PlayerOwner->bShowMouseCursor = true;
-		PlayerOwner->SetInputMode(FInputModeUIOnly());
 	}
 }
 
 void AMainMenuHUD::removeMainMenu()
 {
+	if (GEngine && GEngine->GameViewport && WidgetContainer.IsValid())
+	{
+		GEngine->GameViewport->RemoveViewportWidgetContent(WidgetContainer.ToSharedRef());
 
+		if (PlayerOwner) {
+			PlayerOwner->bShowMouseCursor = false;
+			PlayerOwner->SetInputMode(FInputModeGameOnly());
+		}
+	}
 }
 
 

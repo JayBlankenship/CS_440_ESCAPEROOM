@@ -7,7 +7,7 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SLoginWidget::Construct(const FArguments& InArgs)
 {
-
+	OwnerHUD = InArgs._OwnerHUD;
 	FSlateFontInfo font = FCoreStyle::Get().GetFontStyle("Arial");
 	font.Size = 30.f;
 	
@@ -19,7 +19,7 @@ void SLoginWidget::Construct(const FArguments& InArgs)
 		.HAlign(HAlign_Fill)
 		[
 			SNew(SImage)
-			.ColorAndOpacity(FColor::Green)
+			.ColorAndOpacity(FColor::Blue)
 		]
 		+ SOverlay::Slot()
 		.VAlign(VAlign_Center)
@@ -54,7 +54,6 @@ void SLoginWidget::Construct(const FArguments& InArgs)
 				
 			]
 
-
 		]
 	];
 	
@@ -65,6 +64,7 @@ FReply SLoginWidget::OnLoginClick() const
 	if (OwnerHUD.IsValid())
 	{
 		OwnerHUD->removeLogin();
+		OwnerHUD->showMainMenu();
 	}
 	return FReply::Handled();
 }

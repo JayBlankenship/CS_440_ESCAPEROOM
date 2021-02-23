@@ -18,7 +18,7 @@ protected:
 
 	TSharedPtr<class SMainMenuWidget> MainMenuWidget;
 	TSharedPtr<class SLoginWidget> LoginWidget;
-	TSharedPtr<class SWidget> MenuWidgetContainer;
+	TSharedPtr<class SWidget> WidgetContainer;
 	
 	void BeginPlay();
 
