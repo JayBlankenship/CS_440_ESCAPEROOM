@@ -18,6 +18,7 @@ protected:
 
 	TSharedPtr<class SMainMenuWidget> MainMenuWidget;
 	TSharedPtr<class SLoginWidget> LoginWidget;
+	TSharedPtr<class SMultiplayerWidget> MultiWidget;
 	TSharedPtr<class SWidget> WidgetContainer;
 	
 	void BeginPlay();
@@ -27,4 +28,6 @@ public:
 	void removeLogin();
 	void showMainMenu();
 	void removeMainMenu();
+	void showMultiMenu();
+	void removeMultiMenu();
 };

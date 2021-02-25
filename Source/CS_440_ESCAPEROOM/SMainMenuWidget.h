@@ -26,6 +26,7 @@ public:
 	TWeakObjectPtr<class AMainMenuHUD> OwnerHUD;
 	
 	FReply OnPlayClicked() const;
+	FReply OnMultiplayerClick() const;
 	FReply OnSettingsClicked() const;
 	FReply OnQuitClicked() const;
 

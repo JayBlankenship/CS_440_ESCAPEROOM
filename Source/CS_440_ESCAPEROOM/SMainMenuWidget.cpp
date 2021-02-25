@@ -72,6 +72,20 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 			.Padding(FMargin(10.f))
 			[
 				SNew(SButton)
+				.OnClicked(this, &SMainMenuWidget::OnMultiplayerClick)
+				[
+					SNew(STextBlock)
+					.Font(btnFont)
+					.Text(FText::FromString("Multiplayer"))
+					.Justification(ETextJustify::Center)
+				]
+			]
+
+			//settings button
+			+ SVerticalBox::Slot()
+			.Padding(FMargin(10.f))
+			[
+				SNew(SButton)
 				.OnClicked(this, &SMainMenuWidget::OnSettingsClicked)
 				[
 					SNew(STextBlock)
@@ -106,6 +120,16 @@ FReply SMainMenuWidget::OnPlayClicked() const
 	if (OwnerHUD.IsValid())
 	{
 		OwnerHUD->removeMainMenu();
+	}
+	return FReply::Handled();
+}
+
+FReply SMainMenuWidget::OnMultiplayerClick() const
+{
+	if (OwnerHUD.IsValid())
+	{
+		OwnerHUD->removeMainMenu();
+		OwnerHUD->showMultiMenu();
 	}
 	return FReply::Handled();
 }

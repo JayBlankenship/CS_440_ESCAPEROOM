@@ -22,10 +22,93 @@ void SLoginWidget::Construct(const FArguments& InArgs)
 			.ColorAndOpacity(FColor::Blue)
 		]
 		+ SOverlay::Slot()
-		.VAlign(VAlign_Center)
-		.HAlign(HAlign_Center)
-		.Padding(FMargin(300.f))
+		.VAlign(VAlign_Fill)
+		.HAlign(HAlign_Fill)
+		.Padding(FMargin(50.f))
 		[
+
+			SNew(SHorizontalBox)
+			+ SHorizontalBox::Slot()
+			.VAlign(VAlign_Center)
+			.HAlign(HAlign_Left)
+			[
+
+				SNew(SVerticalBox)
+				+ SVerticalBox::Slot()
+				[
+					//input box for username
+					SNew(SEditableTextBox)
+					.HintText(FText::FromString("username"))
+					.Font(font)
+				]
+				
+				//password input box
+				+ SVerticalBox::Slot()
+				.Padding(FMargin(10.f))
+				[
+					SNew(SEditableTextBox)
+					.HintText(FText::FromString("password"))
+					.Font(font)
+				]
+
+				//Login Button
+				+ SVerticalBox::Slot()
+				.Padding(FMargin(5.f))
+				[
+					SNew(SButton)
+					.OnClicked(this, &SLoginWidget::OnLoginClick)
+					[
+						SNew(STextBlock)
+						.Text(FText::FromString("Login"))
+						.Font(font)
+					]
+
+				]
+			]
+			
+			//create account widgets
+			+ SHorizontalBox::Slot()
+			.Padding(FMargin(100.f))
+			.VAlign(VAlign_Center)
+			.HAlign(HAlign_Right)
+			[
+				SNew(SVerticalBox)
+				+ SVerticalBox::Slot()
+				[
+					SNew(SEditableTextBox)
+					.HintText(FText::FromString("Email"))
+					.Font(font)
+				]
+				+ SVerticalBox::Slot()
+				.Padding(FMargin(10.f))
+				[
+					SNew(SEditableTextBox)
+					.HintText(FText::FromString("Username"))
+					.Font(font)
+				]
+				+ SVerticalBox::Slot()
+				.Padding(FMargin(10.f))
+				[
+					SNew(SEditableTextBox)
+					.HintText(FText::FromString("Password"))
+					.Font(font)
+				]
+				+ SVerticalBox::Slot()
+				.Padding(FMargin(10.f))
+				[
+					SNew(SButton)
+					[
+						SNew(STextBlock)
+						.Text(FText::FromString("Create Account"))
+						.Font(font)
+						.Justification(ETextJustify::Center)
+					]
+				]
+
+
+			]
+
+		    /*
 			SNew(SVerticalBox)
 			+ SVerticalBox::Slot()
 			[
@@ -53,6 +136,7 @@ void SLoginWidget::Construct(const FArguments& InArgs)
 				]
 				
 			]
+			*/
 
 		]
 	];
