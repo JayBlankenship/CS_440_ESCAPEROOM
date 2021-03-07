@@ -26,14 +26,8 @@ protected:
 	//UFUNCTION()
 		
 public:	
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* VisibleComponenttobemoved;
-	UPROPERTY(EditAnywhere, Category = "Menus")
-	float CustomUserValue;
-	bool opendoorb;
-	void opendoor();
 	UFUNCTION()
-	virtual void OnComponentBeginOverlap(
+		void OnComponentBeginOverlap(
 			UPrimitiveComponent* OverlappedComp, 
 			AActor* OtherActor, 
 			UPrimitiveComponent* OtherComp, 
