@@ -4,6 +4,7 @@
 #include "SMultiplayerWidget.h"
 #include "SlateOptMacros.h"
 #include "Engine.h"
+#include "OnlineGameInstance.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SMultiplayerWidget::Construct(const FArguments& InArgs)
@@ -34,6 +35,7 @@ void SMultiplayerWidget::Construct(const FArguments& InArgs)
 				//host game button
 				SNew(SButton)
 				.ButtonColorAndOpacity(FColor::Yellow)
+				.OnClicked(this, &SMultiplayerWidget::OnHostBtnClick)
 				[
 					SNew(STextBlock)
 					.Text(FText::FromString("Host Game"))
@@ -84,6 +86,22 @@ void SMultiplayerWidget::Construct(const FArguments& InArgs)
 		]
 	];
 	
+}
+
+FReply SMultiplayerWidget::OnHostBtnClick()
+{
+	
+	UGameInstance gameInst;
+
+	UOnlineGameInstance* session = (UOnlineGameInstance*) gameInst.GetWorld()->GetGameInstance();
+
+	if (session != NULL)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Got world"));
+	}
+		
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Got world"));
+	return FReply::Handled();
 }
 
 FReply SMultiplayerWidget::OnBackBtnClick() const

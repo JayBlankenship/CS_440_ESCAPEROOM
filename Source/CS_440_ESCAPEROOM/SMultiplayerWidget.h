@@ -23,6 +23,6 @@ public:
 	void Construct(const FArguments& InArgs);
 	TWeakObjectPtr<class AMainMenuHUD> OwnerHUD;
 
-	//FReply OnHostBtnClick() const;
+	FReply OnHostBtnClick();
 	FReply OnBackBtnClick() const;
 };

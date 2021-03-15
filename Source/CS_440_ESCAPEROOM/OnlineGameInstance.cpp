@@ -29,8 +29,8 @@ void UOnlineGameInstance::Init()
 void UOnlineGameInstance::OnCreateSessionComplete(FName serverName, bool succeeded)
 {
 	UE_LOG(LogTemp, Warning, TEXT("OnCreateSessionComplete: Succeeded [%d]"), succeeded);
-	//GetWorld()->ServerTravel(TEXT("/Game/Escape_Room?listen"));
-	GetWorld()->ServerTravel(TEXT("/Game/Main_Menu?listen"));
+	GetWorld()->ServerTravel(TEXT("/Game/Escape_Room?listen"));
+	
 }
 
 void UOnlineGameInstance::Host()

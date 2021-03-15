@@ -17,7 +17,7 @@ class CS_440_ESCAPEROOM_API UOnlineGameInstance : public UGameInstance
 
 public:
 	UOnlineGameInstance();
-
+	
 protected:
 	IOnlineSessionPtr session;
 
@@ -32,6 +32,5 @@ protected:
 
 
 	void EndServer();
-
 
 };
