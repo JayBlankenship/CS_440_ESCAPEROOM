@@ -13,7 +13,7 @@ Acharacterpawn::Acharacterpawn()
 	
 	//VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisibleComponent"));
 	//SetUp RootComponent
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	
 	RotatorComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RotatorComponent"));
 	ConnectionComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ConnectionComponent"));
 
@@ -21,6 +21,7 @@ Acharacterpawn::Acharacterpawn()
 	VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisibleComponent"));
 	OurCameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("OurCameraSpringArm"));
 	OurCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("OurCamera"));
+	RootComponent = VisibleComponent;
 	//VisibleComponent->SetupAttachment(RootComponent);
 	VisibleComponent->SetSimulatePhysics(true);
 	VisibleComponent->SetGenerateOverlapEvents(true);
