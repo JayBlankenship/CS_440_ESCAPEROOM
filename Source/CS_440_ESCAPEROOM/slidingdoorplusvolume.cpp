@@ -85,11 +85,11 @@ void Aslidingdoorplusvolume::Tick(float DeltaTime)
 		}
 		else if (CustomUserchar == "Z" || CustomUserchar == "z")
 		{
-			if ((lv.Y - CustomUserValue) < 0)
+			if ((lv.Z - CustomUserValue) < 0)
 			{
 				Direction = 1;
 			}
-			else if ((lv.Y - CustomUserValue) > 0)
+			else if ((lv.Z - CustomUserValue) > 0)
 			{
 				Direction = -1;
 			}
@@ -109,11 +109,11 @@ void Aslidingdoorplusvolume::Tick(float DeltaTime)
 		}
 		else
 		{
-			if ((lv.Y - CustomUserValue) < 0)
+			if ((lv.X - CustomUserValue) < 0)
 			{
 				Direction = 1;
 			}
-			else if ((lv.Y - CustomUserValue) > 0)
+			else if ((lv.X - CustomUserValue) > 0)
 			{
 				Direction = -1;
 			}
