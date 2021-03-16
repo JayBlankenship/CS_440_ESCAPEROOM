@@ -8,10 +8,12 @@
 // Sets default values
 Aslidingdoorplusvolume::Aslidingdoorplusvolume()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	opendoorb = 0;
+	CustomUserValue = 70;
+	CustomUserchar = "Y";
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	CollisionBox->SetGenerateOverlapEvents(true);
 	CollisionBox->SetupAttachment(RootComponent);
@@ -29,14 +31,14 @@ void Aslidingdoorplusvolume::BeginPlay()
 }
 
 void Aslidingdoorplusvolume::OnComponentBeginOverlap(UPrimitiveComponent * OverlappedComp,
-	AActor * OtherActor, 
-	UPrimitiveComponent * OtherComp, 
-	int32 OtherBodyIndex, 
+	AActor * OtherActor,
+	UPrimitiveComponent * OtherComp,
+	int32 OtherBodyIndex,
 	bool bFromSweep,
 	const FHitResult & SweepResult)
 {
 	auto lv = VisibleComponent->GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("Overlap CALLED actor loaction X %d Y %d z %d"),lv.X,lv.Y,lv.Z );
+	//UE_LOG(LogTemp, Warning, TEXT("Overlap CALLED actor loaction X %d Y %d z %d"), lv.X, lv.Y, lv.Z);
 	//if ((Cast<Acharacterpawn>(OtherActor)))
 	//{
 	//	UE_LOG(LogTemp, Warning, TEXT("Overlap CALLED"));
@@ -55,12 +57,79 @@ void Aslidingdoorplusvolume::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (opendoorb)
 	{
+		int Direction = -1;
 		auto lv = this->GetActorLocation();
-			if (!(lv.Y <= 70))
+		if (CustomUserchar == "Y" || CustomUserchar == "y")
+		{
+			if ((lv.Y - CustomUserValue) < 0)
 			{
-				lv.Y += -4.f;
+				Direction = 1;
+			}
+			else if ((lv.Y - CustomUserValue) > 0)
+			{
+				Direction = -1;
+			}			
+			else
+			{
+				Direction = 0;
+			}
+			if (!(lv.Y <= CustomUserValue))
+			{
+				lv.Y += (Direction*4.f);
 				this->SetActorLocation(lv);
-				//VisibleComponenttobemoved->Set
+			}
+			else
+			{
+				opendoorb = false;
+			}
+		}
+		else if (CustomUserchar == "Z" || CustomUserchar == "z")
+		{
+			if ((lv.Y - CustomUserValue) < 0)
+			{
+				Direction = 1;
+			}
+			else if ((lv.Y - CustomUserValue) > 0)
+			{
+				Direction = -1;
+			}
+			else
+			{
+				Direction = 0;
+			}
+			if (!(lv.Z <= CustomUserValue))
+			{
+				lv.Z += (Direction*4.f);
+				this->SetActorLocation(lv);
+			}
+			else
+			{
+				opendoorb = false;
+			}
+		}
+		else
+		{
+			if ((lv.Y - CustomUserValue) < 0)
+			{
+				Direction = 1;
+			}
+			else if ((lv.Y - CustomUserValue) > 0)
+			{
+				Direction = -1;
+			}
+			else
+			{
+				Direction = 0;
+			}
+			if (!(lv.X <= CustomUserValue))
+			{
+				lv.X += (Direction*4.f);
+				this->SetActorLocation(lv);
+			}
+			else
+			{
+				opendoorb = false;
+			}
 		}
 	}
 }
