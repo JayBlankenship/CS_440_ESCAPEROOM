@@ -20,8 +20,13 @@ public:
 	
 protected:
 	IOnlineSessionPtr session;
+	TSharedPtr<FOnlineSessionSearch> search;
 
 	virtual void OnCreateSessionComplete(FName serverName, bool succeeded);
+
+	virtual void OnJoinSessionComplete(FName name, EOnJoinSessionCompleteResult::Type Result);
+
+	virtual void OnFindSessionsComplete(bool success);
 
 	virtual void Init() override;
 

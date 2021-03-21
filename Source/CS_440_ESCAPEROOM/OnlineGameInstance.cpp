@@ -3,6 +3,7 @@
 
 #include "OnlineGameInstance.h"
 #include "OnlineSubsystem.h"
+#include "Kismet/GameplayStatics.h"
 #include "Interfaces/OnlineSessionInterface.h"
 #include "Engine/World.h"
 #include "OnlineSessionSettings.h"
@@ -22,15 +23,47 @@ void UOnlineGameInstance::Init()
 	if (session.IsValid())
 	{
 		session->OnCreateSessionCompleteDelegates.AddUObject(this, &UOnlineGameInstance::OnCreateSessionComplete);
+		session->OnFindSessionsCompleteDelegates.AddUObject(this, &UOnlineGameInstance::OnFindSessionsComplete);
+		session->OnJoinSessionCompleteDelegates.AddUObject(this, &UOnlineGameInstance::OnJoinSessionComplete);
 	}
 	
 }
 
 void UOnlineGameInstance::OnCreateSessionComplete(FName serverName, bool succeeded)
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnCreateSessionComplete: Succeeded [%d]"), succeeded);
+	
 	GetWorld()->ServerTravel(TEXT("/Game/Escape_Room?listen"));
 	
+}
+
+void UOnlineGameInstance::OnJoinSessionComplete(FName name, EOnJoinSessionCompleteResult::Type Result)
+{
+	
+	APlayerController* pController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (pController)
+	{
+		FString serverAddress = "";
+		session->GetResolvedConnectString(name, serverAddress);
+		if (serverAddress != "") {
+			pController->ClientTravel(serverAddress, ETravelType::TRAVEL_Absolute);
+		}
+		
+	}
+}
+
+void UOnlineGameInstance::OnFindSessionsComplete(bool success)
+{
+
+	if (success)
+	{
+		TArray<FOnlineSessionSearchResult> myResults = search->SearchResults;
+		if (myResults.Num() > 0)
+		{
+			session->JoinSession(0, FName("EscapeRoomSession"), myResults[0]);
+		}
+		
+	}
+
 }
 
 void UOnlineGameInstance::Host()
@@ -39,8 +72,6 @@ void UOnlineGameInstance::Host()
 	FOnlineSessionSettings settings;
 	if (session.IsValid())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Host sucess"));
-	
 
 		settings.bAllowInvites = true;
 		settings.bIsLANMatch = true;
@@ -48,8 +79,6 @@ void UOnlineGameInstance::Host()
 		settings.NumPublicConnections = 4;
 		settings.bUsesPresence = true;
 		settings.bShouldAdvertise = true;
-
-		
 	}
 	session->CreateSession(0, FName("EscapeRoomSession"), settings);
 
@@ -57,7 +86,13 @@ void UOnlineGameInstance::Host()
 
 void UOnlineGameInstance::JoinServer()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Join Server"));
+	search = MakeShareable(new FOnlineSessionSearch());
+	search->bIsLanQuery = true;
+	search->MaxSearchResults = 500;
+	search->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
 
+	session->FindSessions(0, search.ToSharedRef());
 }
 
 void UOnlineGameInstance::EndServer()
