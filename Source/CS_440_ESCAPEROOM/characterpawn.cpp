@@ -13,15 +13,18 @@ Acharacterpawn::Acharacterpawn()
 	
 	//VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisibleComponent"));
 	//SetUp RootComponent
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	
 	RotatorComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RotatorComponent"));
 	ConnectionComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ConnectionComponent"));
+
 	//SetUp VisisbleComponent and attach to RootComponent
 	VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisibleComponent"));
 	OurCameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("OurCameraSpringArm"));
 	OurCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("OurCamera"));
+	RootComponent = VisibleComponent;
 	//VisibleComponent->SetupAttachment(RootComponent);
 	VisibleComponent->SetSimulatePhysics(true);
+	VisibleComponent->SetGenerateOverlapEvents(true);
 
 	VisibleComponent->SetupAttachment(RootComponent);
 
@@ -96,34 +99,37 @@ void Acharacterpawn::MoveRight(float input)
 }
 void Acharacterpawn::jumpup()
 {
-	/*
-	FVector Loc;
-	FRotator Rot;
-	FHitResult Hit;
-
-	GetController()->GetPlayerViewPoint(Loc, Rot);
-	float TraceDistance = 300;
-	FVector Start = Loc;
-	FVector End = Start + (Rot.Vector()*TraceDistance);
-
-	FCollisionQueryParams TraceParams;
-
-	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
-
-	if (bHit)
-	{
-		UStaticMeshComponent* MeshComp = Cast<UStaticMeshComponent>(Hit.GetActor()->GetRootComponent());
-		if (MeshComp)
+	    
+		if (abs(GetVelocity().Z)< .5)
 		{
-			FVector CameraForward = OurCamera->GetForwardVector();
-			MeshComp->AddImpulse(CameraForward*ImpulseForce* MeshComp->GetMass());
+			/*
+			FVector Loc;
+			FRotator Rot;
+			FHitResult Hit;
+
+			GetController()->GetPlayerViewPoint(Loc, Rot);
+			float TraceDistance = 300;
+			FVector Start = Loc;
+			FVector End = Start + (Rot.Vector()*TraceDistance);
+
+			FCollisionQueryParams TraceParams;
+
+			bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
+
+			if (bHit)
+			{
+				UStaticMeshComponent* MeshComp = Cast<UStaticMeshComponent>(Hit.GetActor()->GetRootComponent());
+				if (MeshComp)
+				{
+					FVector CameraForward = OurCamera->GetForwardVector();
+					MeshComp->AddImpulse(CameraForward*ImpulseForce* MeshComp->GetMass());
+				}
+			}
+			*/
+			FVector UP = { 0,0,1 };
+
+			VisibleComponent->AddImpulse(UP*ImpulseForceJump*VisibleComponent->GetMass());
 		}
-	}
-	*/
-	FVector UP = { 0,0,1 };
-
-	VisibleComponent->AddImpulse(UP*ImpulseForceJump*VisibleComponent->GetMass());
-
 
 	//UE_LOG(LogTemp, Warning, TEXT("JumpUp"));
 }

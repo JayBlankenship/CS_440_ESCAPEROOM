@@ -30,6 +30,8 @@ public:
 	UStaticMeshComponent* VisibleComponenttobemoved;
 	UPROPERTY(EditAnywhere, Category = "Menus")
 	float CustomUserValue;
+	UPROPERTY(EditAnywhere, Category = "Menus")
+	FString CustomUserchar;
 	bool opendoorb;
 	void opendoor();
 	UFUNCTION()
