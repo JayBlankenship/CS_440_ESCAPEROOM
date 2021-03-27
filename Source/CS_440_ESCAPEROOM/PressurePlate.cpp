@@ -6,6 +6,9 @@
 #include "Components/CapsuleComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
+int32 APressurePlate::prevPlate = -1;
+bool APressurePlate::reset = false;
+
 // Sets default values
 APressurePlate::APressurePlate()
 {
@@ -20,11 +23,10 @@ APressurePlate::APressurePlate()
 
 	
 	collisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	collisionCapsule->InitCapsuleSize(80.f, 80.f);
+	collisionCapsule->InitCapsuleSize(40.f, 40.f);
 	collisionCapsule->SetupAttachment(RootComponent);
 	collisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &APressurePlate::BeginOverlap);
 	collisionCapsule->OnComponentEndOverlap.AddDynamic(this, &APressurePlate::EndOverlap);
-	
 }
 
 // Called when the game starts or when spawned
@@ -42,8 +44,6 @@ void APressurePlate::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
-
 }
 
 void APressurePlate::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
@@ -54,9 +54,45 @@ void APressurePlate::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 	const FHitResult& SweepResult)
 {
 	if (OtherActor && (OtherActor != this) && OtherComp && daynamicM != nullptr) {
+
+		if (Location.X == 1450.f) {
+			if (APressurePlate::prevPlate == -1) {
+				daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Green);
+				APressurePlate::prevPlate = 0;
+			}
+			
+		}
+
+		if (Location.X == 950.f) {
+			
+			if (APressurePlate::prevPlate == 0) {
+				daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Green);
+				APressurePlate::prevPlate = 1;
+			}
+			else {
+				daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Red);
+				APressurePlate::reset = true;
+			}
+		}
+
+		if (Location.X == 1200.f) {
+
+			if (APressurePlate::prevPlate == 1) {
+				daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Green);
+				APressurePlate::prevPlate = 2;
+			}
+			else {
+				daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Red);
+				APressurePlate::reset = true;
+			}
+			
+		}
+
 		
+		/*
 		if (Location.X == 1450.f) {
 			daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Green);
+
 		}
 		else if (Location.X == 1200.f) {
 			daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Red);
@@ -64,9 +100,10 @@ void APressurePlate::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 		else {
 			daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Yellow);
 		}
-		
-	
+		*/
 	}
+
+	//UE_LOG(LogTemp, Warning, TEXT("counter %d"), counter);
 }
 
 void APressurePlate::EndOverlap(UPrimitiveComponent* OverlappedComponent,
@@ -74,6 +111,13 @@ void APressurePlate::EndOverlap(UPrimitiveComponent* OverlappedComponent,
 	UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex)
 {
-	daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Blue);
+	
+	if (APressurePlate::reset) {
+		daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Blue);
+		APressurePlate::reset = false;
+	}
+	
+	//daynamicM->SetVectorParameterValue(FName("Color"), FLinearColor::Blue);
+	//UE_LOG(LogTemp, Warning, TEXT("counter %d"), counter);
 }
 

@@ -55,4 +55,6 @@ public:
 	void MoveForward(float input);
 	void MoveRight(float input);
 	void jumpup();
+
+
 };

@@ -34,6 +34,9 @@ public:
 
 	FVector Location;  //store the items location
 
+	static int32 prevPlate;
+	static bool reset;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
