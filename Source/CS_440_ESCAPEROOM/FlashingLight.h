@@ -4,18 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "PressurePlate.generated.h"
+#include "FlashingLight.generated.h"
 
 
 UCLASS()
-class CS_440_ESCAPEROOM_API APressurePlate : public AActor
+class CS_440_ESCAPEROOM_API AFlashingLight : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-
 	// Sets default values for this actor's properties
-	APressurePlate();
+	AFlashingLight();
 
 	UPROPERTY()
 		USceneComponent* root;
@@ -23,29 +22,29 @@ public:
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* mesh;
 
+	UPROPERTY(EditAnywhere)
+		class UPointLightComponent* pointLight;
 
 	UPROPERTY(EditAnywhere)
 		class UCapsuleComponent* collisionCapsule;
 
-	UPROPERTY(EditAnywhere)
-		UMaterialInstanceDynamic* daynamicM;
+	FTimerHandle timeManageHandler;
+	float lightOn = 5000.f;
+	float lightOff = 0.f;
 
-	FVector Location;  //store the items location
-
-	static int32 prevPlate;
-	static bool reset;
+	TArray<bool> morseCode;
+	int32 timeCounter;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	virtual void BeginOverlap(UPrimitiveComponent* OverlappedComponent,
+		virtual void BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 			AActor* OtherActor,
 			UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex,
@@ -57,4 +56,8 @@ public:
 			AActor* OtherActor,
 			UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex);
+
+	UFUNCTION()
+	void Flicker();
+
 };
