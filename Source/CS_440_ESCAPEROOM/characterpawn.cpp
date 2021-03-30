@@ -101,7 +101,7 @@ void Acharacterpawn::MoveRight(float input)
 void Acharacterpawn::jumpup()
 {
 	    
-		if (abs(GetVelocity().Z)< .5)
+		if (abs(GetVelocity().Z)< 10)
 		{
 			/*
 			FVector Loc;
