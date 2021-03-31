@@ -31,9 +31,9 @@ public:
 	FTimerHandle timeManageHandler;
 	float lightOn = 5000.f;
 	float lightOff = 0.f;
-
-	TArray<bool> morseCode;
+	float delay;
 	int32 timeCounter;
+	TArray<bool> morseCode;
 
 protected:
 	// Called when the game starts or when spawned

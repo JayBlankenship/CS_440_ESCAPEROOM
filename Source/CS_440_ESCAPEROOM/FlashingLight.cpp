@@ -28,13 +28,10 @@ AFlashingLight::AFlashingLight()
 	collisionCapsule->OnComponentEndOverlap.AddDynamic(this, &AFlashingLight::EndOverlap);
 	
 	timeCounter = 0;
-	morseCode.Init(false, 10);
-	morseCode.Insert(true, 1);
-	morseCode.Insert(true, 3);
-	morseCode.Insert(true, 5);
-	morseCode.Insert(true, 6);
-	morseCode.Insert(true, 7);
-	morseCode.Insert(true, 9);
+
+	morseCode.Init(false, 20);
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -42,6 +39,47 @@ void AFlashingLight::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	FVector location = GetActorLocation();
+
+	if (location.X == -1220) {
+		delay = 1.f;
+		morseCode.Insert(true, 1);
+		morseCode.Insert(true, 3);
+		morseCode.Insert(true, 5);
+		morseCode.Insert(true, 6);
+		morseCode.Insert(true, 7);
+		morseCode.Insert(true, 9);
+		morseCode.Insert(true, 10);
+		morseCode.Insert(true, 13);
+		morseCode.Insert(true, 15);
+		morseCode.Insert(true, 17);
+		morseCode.Insert(true, 20);
+	}
+	else if (location.X == -1770) {
+		delay = .5;
+		morseCode.Insert(true, 1);
+		morseCode.Insert(true, 3);
+		morseCode.Insert(true, 5);
+		morseCode.Insert(true, 7);
+		morseCode.Insert(true, 9);
+		morseCode.Insert(true, 11);
+		morseCode.Insert(true, 13);
+		morseCode.Insert(true, 15);
+		morseCode.Insert(true, 17);
+		morseCode.Insert(true, 20);
+	}
+	else if (location.X == -2480.f){
+		delay = 0.25;
+		morseCode.Insert(true, 3);
+		morseCode.Insert(true, 5);
+		morseCode.Insert(true, 6);
+		morseCode.Insert(true, 7);
+		morseCode.Insert(true, 10);
+		morseCode.Insert(true, 13);
+		morseCode.Insert(true, 14);
+		morseCode.Insert(true, 17);
+		morseCode.Insert(true, 20);
+	}
 }
 
 // Called every frame
@@ -60,8 +98,8 @@ void AFlashingLight::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 
 	if (OtherActor && (OtherActor != this) && OtherComp) {
-		UE_LOG(LogTemp, Warning, TEXT("In Begin Overlap"));
-		GetWorldTimerManager().SetTimer(timeManageHandler, this, &AFlashingLight::Flicker, 1.f, true, 2.f);
+		//UE_LOG(LogTemp, Warning, TEXT("In Begin Overlap"));
+		GetWorldTimerManager().SetTimer(timeManageHandler, this, &AFlashingLight::Flicker, delay, true, 2.f);
 	}
 }
 
@@ -71,19 +109,21 @@ void AFlashingLight::EndOverlap(UPrimitiveComponent* OverlappedComponent,
 	UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex)
 {
+	
 	GetWorldTimerManager().ClearTimer(timeManageHandler);
 	timeCounter = 0;
 }
 
 void AFlashingLight::Flicker()
 {
-	if (timeCounter > 10)
+	if (timeCounter > 20)
 	{
-		GetWorldTimerManager().ClearTimer(timeManageHandler);
 		timeCounter = 0;
+		GetWorldTimerManager().ClearTimer(timeManageHandler);
+		//UE_LOG(LogTemp, Warning, TEXT("Clearing time"));
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("In Flicker"));
+	//UE_LOG(LogTemp, Warning, TEXT("In Flicker"));
 
 	if (morseCode[timeCounter]) {
 		pointLight->SetIntensity(lightOn);
