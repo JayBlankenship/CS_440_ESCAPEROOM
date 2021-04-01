@@ -25,6 +25,7 @@ void UOnlineGameInstance::Init()
 		session->OnCreateSessionCompleteDelegates.AddUObject(this, &UOnlineGameInstance::OnCreateSessionComplete);
 		session->OnFindSessionsCompleteDelegates.AddUObject(this, &UOnlineGameInstance::OnFindSessionsComplete);
 		session->OnJoinSessionCompleteDelegates.AddUObject(this, &UOnlineGameInstance::OnJoinSessionComplete);
+		session->OnEndSessionCompleteDelegates.AddUObject(this, &UOnlineGameInstance::OnEndSessionComplete);
 	}
 	
 }
@@ -34,6 +35,11 @@ void UOnlineGameInstance::OnCreateSessionComplete(FName serverName, bool succeed
 	
 	GetWorld()->ServerTravel(TEXT("/Game/Escape_Room?listen"));
 	
+}
+
+void UOnlineGameInstance::OnEndSessionComplete(FName name, bool flag)
+{
+	session->DestroySession(name);
 }
 
 void UOnlineGameInstance::OnJoinSessionComplete(FName name, EOnJoinSessionCompleteResult::Type Result)
@@ -59,17 +65,20 @@ void UOnlineGameInstance::OnFindSessionsComplete(bool success)
 		TArray<FOnlineSessionSearchResult> myResults = search->SearchResults;
 		if (myResults.Num() > 0)
 		{
-			session->JoinSession(0, FName("EscapeRoomSession"), myResults[0]);
+			session->JoinSession(0, theServerName, myResults[0]);
 		}
 		
 	}
 
 }
 
-void UOnlineGameInstance::Host()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Host"));
+void UOnlineGameInstance::Host(UPARAM(DisplayName = "Name")FString name)
+{	
+	
+	UE_LOG(LogTemp, Warning, TEXT("Host with name: %s"), *name);
 	FOnlineSessionSettings settings;
+	theServerName.AppendString(name);
+
 	if (session.IsValid())
 	{
 
@@ -80,7 +89,7 @@ void UOnlineGameInstance::Host()
 		settings.bUsesPresence = true;
 		settings.bShouldAdvertise = true;
 	}
-	session->CreateSession(0, FName("EscapeRoomSession"), settings);
+	session->CreateSession(0, theServerName, settings);
 
 }
 
@@ -97,6 +106,6 @@ void UOnlineGameInstance::JoinServer()
 
 void UOnlineGameInstance::EndServer()
 {
-
+	session->EndSession(theServerName);
 }
 

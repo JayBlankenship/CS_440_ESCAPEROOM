@@ -21,6 +21,7 @@ public:
 protected:
 	IOnlineSessionPtr session;
 	TSharedPtr<FOnlineSessionSearch> search;
+	FName theServerName;
 
 	virtual void OnCreateSessionComplete(FName serverName, bool succeeded);
 
@@ -28,10 +29,12 @@ protected:
 
 	virtual void OnFindSessionsComplete(bool success);
 
+	virtual void OnEndSessionComplete(FName name, bool flag);
+
 	virtual void Init() override;
 
 	UFUNCTION(BlueprintCallable)
-		void Host();
+		void Host(UPARAM(DisplayName = "Name") FString name);
 	UFUNCTION(BlueprintCallable)
 		void JoinServer();
 
