@@ -19,15 +19,6 @@ public:
 	UPROPERTY(EditAnyWhere)
 	class UBoxComponent* CollisionBox;
 
-	//UFUNCTION()
-	//	void EnterTeleporter(class AActor* overlappedActor, class AActor* otherActor);
-	//UFUNCTION()
-	//	void ExitTeleporter(class AActer* overlappedActer, class AActor* otherActor);
-	//UPROPERTY(EditAnywhere, Category = "Teleporter")
-	//	ATeleporter* otherTele;
-	//UPROPERTY()
-	//	bool teleporting;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

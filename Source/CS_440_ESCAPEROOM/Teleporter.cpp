@@ -14,14 +14,12 @@ ATeleporter::ATeleporter()
 	CollisionBox->SetGenerateOverlapEvents(true);
 	CollisionBox->SetupAttachment(RootComponent);
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ATeleporter::OnComponentBeginOverlap);
-	//CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ATeleporter::OnComponentEndOverlap);
 }
 
 // Called when the game starts or when spawned
 void ATeleporter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -29,7 +27,6 @@ void ATeleporter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//UE_LOG(LogTemp, Warning, TEXT("Overlap CALLED"));
-	//GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(CustomUserValue);
 
 }
 
@@ -45,10 +42,7 @@ void ATeleporter::OnComponentBeginOverlap(UPrimitiveComponent * OverlappedComp,
 	//UE_LOG(LogTemp, Warning, TEXT("Overlap CALLED"));
 	if (character)
 	{
-		
-		//GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(CustomUserValue);
 		//UE_LOG(LogTemp, Warning, TEXT("Overlap CALLED %s"), Cast<String>(character->GetName()));
 		character->SetActorLocation(CustomUserValue);
-		//character->SetActorLocationAndRotation(CustomUserValue, character->GetActorRotation());
 	}
 }

@@ -42,9 +42,7 @@ void AColorChanger::OnComponentBeginOverlap(UPrimitiveComponent * OverlappedComp
 	//UE_LOG(LogTemp, Warning, TEXT("Overlap CALLED"));
 	if (character)
 	{
-		//GetWorld()->GetFirstPlayerController()->GetPawn()->SetActorLocation(CustomUserValue);
 		//UE_LOG(LogTemp, Warning, TEXT("Overlap CALLED %s"), Cast<String>(character->GetName()));
 		character->VisibleComponent->SetMaterial(0, CustomUserValue);
-		//character->SetActorLocationAndRotation(CustomUserValue, character->GetActorRotation());
 	}
 }

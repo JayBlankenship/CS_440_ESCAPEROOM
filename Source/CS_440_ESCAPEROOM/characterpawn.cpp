@@ -10,10 +10,6 @@ Acharacterpawn::Acharacterpawn()
 	ImpulseForceMove = 100.0f;
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
-	//VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("VisibleComponent"));
-	//SetUp RootComponent
-	
 	RotatorComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RotatorComponent"));
 	ConnectionComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ConnectionComponent"));
 
@@ -56,13 +52,8 @@ void Acharacterpawn::Tick(float DeltaTime)
 void Acharacterpawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	// Check if PlayerInputComponent is valid (not NULL)
 	check(PlayerInputComponent);
 	InputComponent = PlayerInputComponent;
-	//UE_LOG(LogTemp, Warning, TEXT("Postregisterallcomponents CALLED"));
-
-	//PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &ASnake::Pause);
-	//PlayerInputComponent->BindAxis("Boost", this, &ASnake::MoveFowardBoost);
 	PlayerInputComponent->BindAxis("UPorDOWN_Camera", this, &Acharacterpawn::movecameraupordown);
 	PlayerInputComponent->BindAxis("SIDE2SIDE_Camera", this, &Acharacterpawn::movecamerside2side);
 	PlayerInputComponent->BindAxis("Forward", this, &Acharacterpawn::MoveForward);
@@ -77,7 +68,6 @@ void Acharacterpawn::movecameraupordown(float input)
 	FRotator CameraRotation = RotatorComponent->GetRelativeRotation();
 	CameraRotation.Yaw += input;
 	RotatorComponent->SetRelativeRotation(CameraRotation);
-	//UE_LOG(LogTemp, Warning, TEXT("Camera rotation Y = %d "),CameraRotation.Yaw);
 }
 
 void Acharacterpawn::movecamerside2side(float input)
